@@ -2,6 +2,7 @@ let startDiv = document.getElementById('start-screen');
 let startScreenDiv = document.getElementById('startScreen');
 let endScreenDiv = document.getElementById('end-screen');
 let questionsDiv = document.getElementById('questions');
+let timer = document.getElementsByClassName('timer')[0];
 let time = document.getElementById('time');
 let questionTitle = document.getElementById('question-title');
 let choices = document.getElementById('choices')
@@ -76,6 +77,14 @@ let renderQuestion = function(){
                 feedback.innerText = "Wrong :("
                 flashTime();
                 timerCount = timerCount - 10;
+                // Stop timer going below 0
+                if(timerCount < 10) {
+                    timer.classList.add('time-out')
+                }
+                if(timerCount <= 1) {
+                    console.log('smaller than on1')
+                    timer.innerHTML = "Times Up!"
+                }
             }
         });
     }
@@ -83,7 +92,6 @@ let renderQuestion = function(){
 
 // This is a silly animation to make it more obvious the time has decreased by 10seconds
 let flashTime = function(){
-    let timer = document.getElementsByClassName('timer')[0];
     let length = 200
 
     timer.style.animation = `timeAnimation ${length}ms linear`;
@@ -113,7 +121,6 @@ let endGame = function(){
 };
 
 let collectScores = function(){
-
     initialsSubmit.addEventListener('click', function(){
         console.log('final score: ', finalScore, initials.value)
 

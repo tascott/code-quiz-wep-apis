@@ -9,9 +9,10 @@ let displayScores = function(){
     highScores.innerHTML = '';
 
     if (scoresFromStorage && scoresFromStorage.length > 0){
-        //We want to show maximum 5 correct
+        // We want to show maximum 5 top scores
         scoresToShow =  Math.min(5, scoresFromStorage.length);
         for (let i = 0; i < scoresToShow; i++) {
+            // Update dom with scores
             let li = document.createElement('li');
             li.textContent = `${scoresFromStorage[i].initials.toUpperCase()}: ${scoresFromStorage[i].score}`;
             highScores.appendChild(li);
