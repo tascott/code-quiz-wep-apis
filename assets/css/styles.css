@@ -30,6 +30,12 @@ button:hover {
   background-color: #8570a5;
 }
 
+.choices {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .choices button {
   display: block;
 }
@@ -93,6 +99,10 @@ li:nth-child(odd) {
 .time-out {
   background-color: red;
   color: white;
+}
+
+#question-title {
+ text-align: center;
 }
 
 @keyframes timeAnimation {
