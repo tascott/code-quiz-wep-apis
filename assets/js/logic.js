@@ -1,15 +1,17 @@
 let startDiv = document.getElementById('start-screen');
 let startScreenDiv = document.getElementById('startScreen');
-let endScreenDiv = document.getElementById('endScreen');
+let endScreenDiv = document.getElementById('end-screen');
 let questionsDiv = document.getElementById('questions');
 let time = document.getElementById('time');
 let questionTitle = document.getElementById('question-title');
 let choices = document.getElementById('choices')
 let feedback = document.getElementById('feedback');
+let initialsSubmit = document.getElementById('submit');
 //shuffle the questions in to a new array
 let shuffledQuestions = questions.sort(() => Math.random() - 0.5);
 let timerCount = 60;
 let interval;
+let finalScore;
 
 start.addEventListener('click', function(){
     startQuiz();
@@ -43,6 +45,7 @@ let startTimer = function(){
 let renderQuestion = function(){
     // show questions div
     questionsDiv.classList.remove('hide');
+    feedback.classList.remove('hide');
 
     //loop through answers for the question and add them to the dom
     for(let i = 0; i < shuffledQuestions[0].options.length; i++){
@@ -57,6 +60,7 @@ let renderQuestion = function(){
         choice.addEventListener('click', function(){
             if(this.innerText === shuffledQuestions[0].answer){
                 //correct answer
+                feedback.innerText = "Correct!"
                 shuffledQuestions.shift();
                 //clear the div with choices in
                 choices.innerHTML = ""
@@ -67,6 +71,7 @@ let renderQuestion = function(){
                 }
             } else {
                 //incorrect answer
+                feedback.innerText = "Wrong :("
                 flashTime();
                 timerCount = timerCount - 10;
             }
@@ -86,9 +91,28 @@ let flashTime = function(){
 }
 
 let endGame = function(){
-    questionTitle.innerText = 'Game Over';
-    choices.innerHTML="";
+    questionTitle.innerText = '';
+    choices.innerHTML = "";
     clearInterval(interval);
-    feedback.classList.remove('hide')
-    feedback.innerText = `You win! ${time.innerText} left`;
+
+    if (Number(time.innerText) > 0 ){
+        // User won, proceed to initials + table
+        feedback.innerText = `You win! Your Score is ${time.innerText}`;
+        endScreenDiv.classList.remove('hide');
+    } else {
+        // User lost, play again
+        feedback.innerText = "You Lose :(";
+        feedback.appendChild(document.createElement('button'))
+    }
+
+    collectScores();
+
 };
+
+let collectScores = function(){
+
+    initialsSubmit.addEventListener('click', function(){
+        console.log('swheouh')
+    });
+
+}
