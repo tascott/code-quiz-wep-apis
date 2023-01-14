@@ -126,9 +126,7 @@ let collectScores = function(){
             localStorage.setItem("highScores", JSON.stringify(scores));
         //Otherwise make a new localstorage item
         } else {
-            console.log('scores empty)')
             localStorage.setItem("highScores", JSON.stringify(scores));
-
         }
 
         window.location.href = '../highscores.html';
