@@ -119,19 +119,22 @@ let endGame = function(){
 
 let collectScores = function(){
     initialsSubmit.addEventListener('click', function(){
-        let scores = [{initials: initials.value, score: finalScore}];
+        if(initials.value.length > 2) {
+            initialsSubmit.setAttribute('disabled', false)
+            let scores = [{initials: initials.value, score: finalScore}];
 
-        //if we already have some scores in localstorage, grab them and add to it
-        if (localStorage.getItem('highScores')) {
-            let scoresFromStorage = JSON.parse(localStorage.getItem('highScores'));
-            scores = scores.concat(scoresFromStorage);
-            localStorage.setItem("highScores", JSON.stringify(scores));
-        //Otherwise make a new localstorage item
-        } else {
-            localStorage.setItem("highScores", JSON.stringify(scores));
+            //if we already have some scores in localstorage, grab them and add to it
+            if (localStorage.getItem('highScores')) {
+                let scoresFromStorage = JSON.parse(localStorage.getItem('highScores'));
+                scores = scores.concat(scoresFromStorage);
+                localStorage.setItem("highScores", JSON.stringify(scores));
+            //Otherwise make a new localstorage item
+            } else {
+                localStorage.setItem("highScores", JSON.stringify(scores));
+            }
+
+            window.location.href = '../highscores.html';
         }
-
-        window.location.href = '../highscores.html';
     });
 
 }
