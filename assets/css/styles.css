@@ -86,3 +86,15 @@ li:nth-child(odd) {
   top: 10px;
   right: 10px;
 }
+
+@keyframes timeAnimation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.4);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

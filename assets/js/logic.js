@@ -3,55 +3,51 @@ let startScreenDiv = document.getElementById('startScreen');
 let endScreenDiv = document.getElementById('endScreen');
 let questionsDiv = document.getElementById('questions');
 let time = document.getElementById('time');
-let timerCount = 10;
 let questionTitle = document.getElementById('question-title');
 let choices = document.getElementById('choices')
+let feedback = document.getElementById('feedback');
 //shuffle the questions in to a new array
 let shuffledQuestions = questions.sort(() => Math.random() - 0.5);
-
+let timerCount = 60;
+let interval;
 
 start.addEventListener('click', function(){
-    console.log('click event');
     startQuiz();
 });
 
 let startQuiz = function(){
-    console.log('start quiz');
     // hide startDiv
     startDiv.classList.add('hide');
     //show questionsDiv
     questionsDiv.classList.remove('hide');
-    renderQuestions();
-
-    //start timer
+    renderQuestion();
     startTimer();
 };
 
 let startTimer = function(){
+    //call it once so there isn't a 1s delay to the countdown
+    countDown();
+
     function countDown(){
         time.innerText = timerCount;
         timerCount--;
         if(timerCount < 0){
-            clearInterval(interval)
+            clearInterval(interval);
             endGame();
         }
     }
 
-    let interval = setInterval(countDown, 1000);
-
-    //call it once first so there isn't a 1s delay to the countdown appearing
-    countDown()
+    interval = setInterval(countDown, 1000);
 };
 
-let renderQuestions = function(){
+let renderQuestion = function(){
     // show questions div
     questionsDiv.classList.remove('hide');
 
-    //Get the first question
-    questionTitle.innerText = shuffledQuestions[0].question;
-
-    //loop through answers options and add them to the dom
+    //loop through answers for the question and add them to the dom
     for(let i = 0; i < shuffledQuestions[0].options.length; i++){
+         //Get the first question title
+        questionTitle.innerText = shuffledQuestions[0].question;
         let choice = document.createElement('button');
         //append to questions div
         choices.appendChild(choice);
@@ -59,18 +55,40 @@ let renderQuestions = function(){
 
         //add event listener to each choice
         choice.addEventListener('click', function(){
-            console.log('clickkkkkk', this.innerText)
             if(this.innerText === shuffledQuestions[0].answer){
                 //correct answer
-                console.log('correct!')
+                shuffledQuestions.shift();
+                //clear the div with choices in
+                choices.innerHTML = ""
+                if(shuffledQuestions.length > 0) {
+                    renderQuestion();
+                } else {
+                    endGame();
+                }
             } else {
                 //incorrect answer
-                console.log('incorrect!')
+                flashTime();
+                timerCount = timerCount - 10;
             }
         });
     }
 };
 
+// This is a silly animation to make it more obvious the time has decreased by 10seconds
+let flashTime = function(){
+    let timer = document.getElementsByClassName('timer')[0];
+    let length = 200
+
+    timer.style.animation = `timeAnimation ${length}ms linear`;
+    setTimeout(function() {
+        timer.style.animation = '';
+    }, length);
+}
+
 let endGame = function(){
-    console.log('end game');
+    questionTitle.innerText = 'Game Over';
+    choices.innerHTML="";
+    clearInterval(interval);
+    feedback.classList.remove('hide')
+    feedback.innerText = `You win! ${time.innerText} left`;
 };
