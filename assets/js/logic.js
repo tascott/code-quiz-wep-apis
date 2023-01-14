@@ -6,7 +6,9 @@ let time = document.getElementById('time');
 let questionTitle = document.getElementById('question-title');
 let choices = document.getElementById('choices')
 let feedback = document.getElementById('feedback');
+let initials = document.getElementById('initials');
 let initialsSubmit = document.getElementById('submit');
+let refresh = document.getElementById('refresh');
 //shuffle the questions in to a new array
 let shuffledQuestions = questions.sort(() => Math.random() - 0.5);
 let timerCount = 60;
@@ -94,15 +96,16 @@ let endGame = function(){
     questionTitle.innerText = '';
     choices.innerHTML = "";
     clearInterval(interval);
+    finalScore = time.innerText;
 
-    if (Number(time.innerText) > 0 ){
+    if (Number(finalScore) > 0 ){
         // User won, proceed to initials + table
-        feedback.innerText = `You win! Your Score is ${time.innerText}`;
+        feedback.innerText = `You win! Your Score is ${finalScore}`;
         endScreenDiv.classList.remove('hide');
     } else {
         // User lost, play again
         feedback.innerText = "You Lose :(";
-        feedback.appendChild(document.createElement('button'))
+        refresh.classList.remove('hide')
     }
 
     collectScores();
@@ -112,7 +115,23 @@ let endGame = function(){
 let collectScores = function(){
 
     initialsSubmit.addEventListener('click', function(){
-        console.log('swheouh')
+        console.log('final score: ', finalScore, initials.value)
+
+        let scores = [{initials: initials.value, score: finalScore}];
+
+        //if we already have some scores in localstorage, grab them and add to it
+        if (localStorage.getItem('highScores')) {
+            let scoresFromStorage = JSON.parse(localStorage.getItem('highScores'));
+            scores = scores.concat(scoresFromStorage);
+            localStorage.setItem("highScores", JSON.stringify(scores));
+        //Otherwise make a new localstorage item
+        } else {
+            console.log('scores empty)')
+            localStorage.setItem("highScores", JSON.stringify(scores));
+
+        }
+
+        window.location.href = '../highscores.html';
     });
 
 }
