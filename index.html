@@ -34,12 +34,13 @@
         <h2>All done!</h2>
         <p>Your final score is <span id="final-score"></span>.</p>
         <p>
-          Enter initials: <input type="text" id="initials" max="3" />
+          Enter initials: <input type="text" id="initials" maxlength="3" />
           <button id="submit">Submit</button>
         </p>
       </div>
 
       <div id="feedback" class="feedback hide"></div>
+      <button id="refresh" class="hide" href="window.location.reload()">Click here to try again</button>
     </div>
 
     <script src="./assets/js/questions.js"></script>
