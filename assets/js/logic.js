@@ -36,8 +36,13 @@ let startTimer = function(){
     function countDown(){
         time.innerText = timerCount;
         timerCount--;
+         // Stop timer going below 0
+        if(timerCount < 10) {
+            timer.classList.add('time-out')
+        }
         if(timerCount < 0){
             clearInterval(interval);
+            timer.innerHTML = "Times Up!"
             endGame();
         }
     }
@@ -77,14 +82,6 @@ let renderQuestion = function(){
                 feedback.innerText = "Wrong :("
                 flashTime();
                 timerCount = timerCount - 10;
-                // Stop timer going below 0
-                if(timerCount < 10) {
-                    timer.classList.add('time-out')
-                }
-                if(timerCount <= 1) {
-                    console.log('smaller than on1')
-                    timer.innerHTML = "Times Up!"
-                }
             }
         });
     }
@@ -108,6 +105,7 @@ let endGame = function(){
 
     if (Number(finalScore) > 0 ){
         // User won, proceed to initials + table
+        document.getElementById('final-score').innerText = finalScore;
         feedback.innerText = `You win! Your Score is ${finalScore}`;
         endScreenDiv.classList.remove('hide');
     } else {
@@ -117,13 +115,10 @@ let endGame = function(){
     }
 
     collectScores();
-
 };
 
 let collectScores = function(){
     initialsSubmit.addEventListener('click', function(){
-        console.log('final score: ', finalScore, initials.value)
-
         let scores = [{initials: initials.value, score: finalScore}];
 
         //if we already have some scores in localstorage, grab them and add to it
