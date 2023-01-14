@@ -4,6 +4,10 @@ let endScreenDiv = document.getElementById('endScreen');
 let questionsDiv = document.getElementById('questions');
 let time = document.getElementById('time');
 let timerCount = 10;
+let questionTitle = document.getElementById('question-title');
+let choices = document.getElementById('choices')
+//shuffle the questions in to a new array
+let shuffledQuestions = questions.sort(() => Math.random() - 0.5);
 
 
 start.addEventListener('click', function(){
@@ -16,7 +20,8 @@ let startQuiz = function(){
     // hide startDiv
     startDiv.classList.add('hide');
     //show questionsDiv
-    questionsDiv.classList.add('hide');
+    questionsDiv.classList.remove('hide');
+    renderQuestions();
 
     //start timer
     startTimer();
@@ -34,12 +39,36 @@ let startTimer = function(){
 
     let interval = setInterval(countDown, 1000);
 
-    //call it once first so there isn't a 1second delay to the countdown appearing
+    //call it once first so there isn't a 1s delay to the countdown appearing
     countDown()
 };
 
 let renderQuestions = function(){
-    console.log('render questions');
+    // show questions div
+    questionsDiv.classList.remove('hide');
+
+    //Get the first question
+    questionTitle.innerText = shuffledQuestions[0].question;
+
+    //loop through answers options and add them to the dom
+    for(let i = 0; i < shuffledQuestions[0].options.length; i++){
+        let choice = document.createElement('button');
+        //append to questions div
+        choices.appendChild(choice);
+        choice.innerText = shuffledQuestions[0].options[i];
+
+        //add event listener to each choice
+        choice.addEventListener('click', function(){
+            console.log('clickkkkkk', this.innerText)
+            if(this.innerText === shuffledQuestions[0].answer){
+                //correct answer
+                console.log('correct!')
+            } else {
+                //incorrect answer
+                console.log('incorrect!')
+            }
+        });
+    }
 };
 
 let endGame = function(){
