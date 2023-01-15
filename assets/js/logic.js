@@ -16,6 +16,10 @@ let timerCount = 60;
 let interval;
 let finalScore;
 
+//Sounds
+var correct = new Audio('assets/sfx/correct.wav');
+var incorrect = new Audio('assets/sfx/incorrect.wav');
+
 start.addEventListener('click', function(){
     startQuiz();
 });
@@ -69,6 +73,7 @@ let renderQuestion = function(){
             if(this.innerText === shuffledQuestions[0].answer){
                 //correct answer
                 feedback.innerText = "Correct!"
+                correct.play();
                 shuffledQuestions.shift();
                 //clear the div with choices in
                 choices.innerHTML = ""
@@ -79,6 +84,7 @@ let renderQuestion = function(){
                 }
             } else {
                 //incorrect answer
+                incorrect.play();
                 feedback.innerText = "Wrong :("
                 flashTime();
                 timerCount = timerCount - 10;
