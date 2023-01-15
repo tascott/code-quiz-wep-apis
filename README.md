@@ -19,6 +19,7 @@ If you complete all the questions, the remaining time will be your score. Enter 
 
 
 ## Screenshot
+<img width="564" alt="Screenshot 2023-01-15 at 20 10 31" src="https://user-images.githubusercontent.com/18272434/212564525-37698e11-88f9-46c9-a58b-ed968de2a65e.png">
 
 
 ## Credits
