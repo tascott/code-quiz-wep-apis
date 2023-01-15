@@ -15,7 +15,7 @@ Press the 'start quiz' button and the first question will appear, with four poss
 
 If you complete all the questions, the remaining time will be your score. Enter your initials to submit it to the leaderboard - you will be automatically redirected to the high scores page where you can view and erase the high scores (top 5 will be displayed).
 
-[Link to working site]()
+[Link to working site](https://tascott.github.io/code-quiz-wep-apis/index.html)
 
 
 ## Screenshot
