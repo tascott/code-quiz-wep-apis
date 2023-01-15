@@ -139,7 +139,7 @@ let collectScores = function(){
                 localStorage.setItem("highScores", JSON.stringify(scores));
             }
 
-            window.location.href = '../highscores.html';
+            window.location.href = 'highscores.html';
         }
     });
 
